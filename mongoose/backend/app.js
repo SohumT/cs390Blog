@@ -10,6 +10,8 @@ import {fileURLToPath} from "node:url";
 import blogRouter from "./routes/blog.js";
 import indexRouter from "./routes/index.js";
 
+/*import auth from "express-basic-auth"*/
+
 const app = express();
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 app.use(logger("dev"));

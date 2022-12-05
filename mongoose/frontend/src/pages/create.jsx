@@ -5,10 +5,13 @@ export function Create() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
+    setError("")
     e.preventDefault();
-    const requestData = JSON.stringify({title, content});
+    const requestData = JSON.stringify({title, content, password});
     const headers = {"content-type": "application/json"};
 
     // ??
@@ -20,6 +23,12 @@ export function Create() {
       });
 
       const json = await resp.json();
+
+      if (json.error){
+        setError(json.error)
+        return
+      }
+
       setDone(true);
     }
 
@@ -48,7 +57,16 @@ export function Create() {
           onChange={(e) => setContent(e.currentTarget.value)}
         ></textarea>
       </div>
+      <div>
+        <input 
+          placeholder="password"
+          value={password} 
+          onChange={(e) => setPassword(e.currentTarget.value)} 
+          type="password"
+        />
+      </div>
       <button>Post</button>
+      {error && <div>{error}</div>}
     </form>
   );
 }
